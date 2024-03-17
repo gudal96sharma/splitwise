@@ -4,6 +4,7 @@ from rest_framework import status
 from src import serializers, models
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.conf import settings
 
 # Create your views here.
 
@@ -11,7 +12,7 @@ def send_expense_notification_email(user_email, expense_name, amount_owed):
     subject = 'Expense Notification'
     html_message = render_to_string('expense_notification_email.html', {'expense_name': expense_name, 'amount_owed': amount_owed})
     plain_message = ''
-    send_mail(subject, plain_message, 'developermuralikrishna@gmail.com', [user_email], html_message=html_message)
+    send_mail(subject, plain_message, settings.EMAIL_HOST_USER, [user_email], html_message=html_message)
 
 class UserProfileApiView(APIView):
     """Test API View"""
